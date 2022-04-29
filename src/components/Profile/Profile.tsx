@@ -1,9 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setUser } from "../../redux/ducks/userDuck";
-import profilePicture from "../../assets/images/prof-pic.webp";
+//import profilePicture from "../../assets/images/prof-pic.jpg";
 import "./Profile.css";
 
+const profilePicture =  require("../../assets/images/p-pic.jpg")
 const userSelector = (state) => state.userReducer;
 
 const Profile = () => {

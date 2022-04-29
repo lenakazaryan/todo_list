@@ -1,4 +1,5 @@
-import { createAction } from "../../helpers/redux";
+import { createAction } from "../helpers/redux";
+
 const SET_USER = "userReducer/SET_USER";
 
 export const setUser = createAction(SET_USER);
@@ -7,6 +8,7 @@ const initialState = {
   user: null,
 };
 
+console.log(initialState, "nullllll");
 const userReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case SET_USER:

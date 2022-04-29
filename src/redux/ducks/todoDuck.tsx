@@ -1,4 +1,5 @@
-import { createAction } from "../../helpers/redux";
+import { createAction } from "../helpers/redux";
+import { Todo } from '../../Interface/Todo';
 
 const ADD_TODO = "todoListReducer/ADD_TODO";
 const DELETE_TODO = "todoListReducer/DELETE_TODO";
@@ -18,6 +19,8 @@ const initialState = {
 };
 
 const todoListReducer = (state = initialState, { type, payload }) => {
+  console.log('todoListReducer', type, payload);
+  
   switch (type) {
     case ADD_TODO:
       return {
@@ -26,14 +29,17 @@ const todoListReducer = (state = initialState, { type, payload }) => {
       };
 
     case DELETE_TODO:
-      const filtered = state.todo.filter((item) => item.id !== payload);
+      const filtered = state.todo.filter(
+        (item: { id: number }) => item.id !== payload
+      );
       return {
         ...state,
         todo: filtered,
       };
 
     case UPDATE_TODO:
-      const todosCopy = [...state.todo];
+      const todosCopy: Todo[] = [...state.todo];
+      console.log(payload, "payload");
       todosCopy.splice(payload.id - 1, 1, payload);
       return {
         ...state,
@@ -47,16 +53,18 @@ const todoListReducer = (state = initialState, { type, payload }) => {
       };
 
     case SET_COMPLETED_TODO:
-      const completed = state.todo.map((item) => {
-        if (payload === item.id) {
-          if (item.isCompleted) {
-            item.isCompleted = false;
-          } else {
-            item.isCompleted = true;
+      const completed = state.todo.map(
+        (item: { id: number; isCompleted: boolean }) => {
+          if (payload === item.id) {
+            if (item.isCompleted) {
+              item.isCompleted = false;
+            } else {
+              item.isCompleted = true;
+            }
           }
+          return item;
         }
-        return item;
-      });
+      );
       return {
         ...state,
         todo: completed,

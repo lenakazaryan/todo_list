@@ -1,29 +1,34 @@
 import "../Login/Login.css";
 import { useDispatch } from "react-redux";
 import { setAuthtab } from "../../redux/ducks/authDuck";
-import { AUTH_ROUTES } from "../../helpers/constants";
+import { AUTH_ROUTES } from "../../redux/helpers/constants";
 import { setUser } from "../../redux/ducks/userDuck";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { LoginInterface } from "../../Interface/Login";
 
 const [, REGISTRATION] = AUTH_ROUTES;
 const ERROR_MESSAGE = "Wrong Login or Password";
 
-function Login() {
-  const { register, handleSubmit } = useForm();
+type FormValues = {
+  login: string;
+  password: string;
+};
 
+function Login() {
+  const { register, handleSubmit } = useForm<FormValues>();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const gotoRegister = () => dispatch(setAuthtab(REGISTRATION));
-
-  const onSubmit = (data) => {
+  const onSubmit = (data: LoginInterface) => {
     const users = localStorage.getItem("users");
     if (!users) {
-      console.log("error");
+      console.log(ERROR_MESSAGE);
     } else {
       const parsed = JSON.parse(users);
-      const currentUser = parsed.find((item) => item.login === data.login);
+      const currentUser = parsed.find(
+        (item: LoginInterface) => item.login === data.login
+      );
       if (!currentUser) {
         console.log(ERROR_MESSAGE);
       } else {

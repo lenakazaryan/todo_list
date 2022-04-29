@@ -1,5 +1,5 @@
-import { createAction } from "../../helpers/redux";
-import { AUTH_ROUTES } from "../../helpers/constants";
+import { createAction } from "../helpers/redux";
+import { AUTH_ROUTES } from "../helpers/constants";
 
 const SET_AUTH_TAB = "userReducer/SET_AUTH_TAB";
 
